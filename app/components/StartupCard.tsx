@@ -1,41 +1,43 @@
-import { formatDate } from "@/lib/utils";
+import { cn, formatDate } from "@/lib/utils";
 import { EyeIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "./ui/button";
+import { Skeleton } from "./ui/skeleton";
 
 export type StartupTypeCard = {
-  id: number;
+  _id: number;
   title: string;
   slug: string;
+  author: {
+    _id: number;
+    name: string;
+    username: string;
+    image: string;
+  };
   views: number;
-  date: Date;
   description: string;
   category: string;
   image: string;
   pitch: string;
-  authorId: number;
-  author: {
-    id: number;
-    name: string;
-  };
+  date: Date;
 };
 
 const StartupCard = ({ post }: { post: StartupTypeCard }) => {
   const {
-    date,
-    views,
-    author: { id: authorId, name },
+    _id,
     title,
-    category,
-    id,
-    image,
+    author: { _id: authorId, name: authorName, image: authorImg},
+    views,
     description,
+    category,
+    image,
+    date,
   } = post;
   return (
     <li className="startup-card group">
       <div className="flex-between">
-        <p className="startup_card_date">{formatDate(date.toString())}</p>
+        <p className="startup_card_date">{formatDate(date)}</p>
         <div className="flex gap-1.5">
           <EyeIcon className="size-6 text-primary"></EyeIcon>
           <span className="text-16-medium">{views}</span>
@@ -45,18 +47,18 @@ const StartupCard = ({ post }: { post: StartupTypeCard }) => {
       <div className="flex-between mt-5 gap-5">
         <div className="flex-1">
           <Link href={`/user/${authorId}`}>
-            <p className="text-16-medium line-clamp-1">{name}</p>
+            <p className="text-16-medium line-clamp-1">{authorName}</p>
           </Link>
 
-          <Link href={`/startup/${id}`}>
+          <Link href={`/startup/${_id}`}>
             <h3 className="text-26-semibold line-clamp-1">{title}</h3>
           </Link>
         </div>
 
         <Link href={`/user/${authorId}`}>
           <Image
-            src="https://placehold.co/48x48"
-            alt="placeholder"
+            src={authorImg}
+            alt={authorName}
             width={48}
             height={48}
             className="rounded-full"
@@ -64,7 +66,7 @@ const StartupCard = ({ post }: { post: StartupTypeCard }) => {
         </Link>
       </div>
 
-      <Link href={`/startup/${id}`}>
+      <Link href={`/startup/${_id}`}>
         <p className="startup-card_desc">{description}</p>
 
         <img src={image} alt="placeholder" className="startup-card_img" />
@@ -76,11 +78,24 @@ const StartupCard = ({ post }: { post: StartupTypeCard }) => {
         </Link>
 
         <Button className="startup-card_btn" asChild>
-          <Link href={`/startup/${id}`}>Details</Link>
+          <Link href={`/startup/${_id}`}>Details</Link>
         </Button>
       </div>
     </li>
   );
 };
+
+export const StartupCardSkeleton = () => (
+  <>
+    {[0, 1, 2, 3, 4].map((index: number) => {
+      return (
+        <li key={cn('skeleton', index)}>
+          <Skeleton className="startup-card_skeleton"/>
+        </li>
+      );
+    })}
+  </>
+);
+
 
 export default StartupCard;
