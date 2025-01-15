@@ -3,7 +3,7 @@ import React from 'react'
 import StartupCard, { StartupTypeCard } from './StartupCard'
 
 const UserStartups = async ({id}: {id: string}) => {
-    const response = await axios.get(`https://launchpad-be-z59x.onrender.com/api/startups-by-author/${id}`)
+    const response = await axios.get(`https://launchpadbe.vercel.app/api/startups-by-author/${id}`)
     const startups = response.data.startups;
 
   return <>

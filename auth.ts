@@ -10,7 +10,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       const { name, email, image } = user;
 
       try {
-        const response = await axios.post("https://launchpad-be-z59x.onrender.com/api/signin", {
+        const response = await axios.post("https://launchpadbe.vercel.app/api/signin", {
           id,
           name,
           username,
@@ -27,7 +27,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
     async jwt({token, account, profile}){
       if(account && profile){
-        const response = await axios.post("https://launchpad-be-z59x.onrender.com/api/signin", {
+        const response = await axios.post("https://launchpadbe.vercel.app/api/signin", {
           id: profile?.id,
         });
         const user = response.data.user;

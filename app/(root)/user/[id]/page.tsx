@@ -13,7 +13,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const session = await auth();
 
   const response = await axios.post(
-    `https://launchpad-be-z59x.onrender.com/api/get-author/${id}`
+    `https://launchpadbe.vercel.app/api/get-author/${id}`
   );
   if (!response) return notFound();
   // console.log(response.data.author);

@@ -36,13 +36,13 @@ export const createPitch = async (
     };
 
     const authorResponse = await axios.post(
-        `https://launchpad-be-z59x.onrender.com/api/get-author/${session?.id}`
+        `https://launchpadbe.vercel.app/api/get-author/${session?.id}`
     );
     // console.log(authorResponse.data);
     const author = authorResponse.data.author._id;
 
     const result = await axios.post(
-      "https://launchpad-be-z59x.onrender.com/api/create-startup",
+      "https://launchpadbe.vercel.app/api/create-startup",
       {
         ...startup,
         author

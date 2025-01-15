@@ -17,7 +17,7 @@ export const dynamicParams = true;
 
 // export async function generateStaticParams() {
 //     try {
-//         const response = await fetch(`https://launchpad-be-z59x.onrender.com/api/startups`, {
+//         const response = await fetch(`https://launchpadbe.vercel.app/api/startups`, {
 //             method: 'POST',
 //         });
 //         if (!response.ok) {
@@ -40,20 +40,20 @@ const page = async ({params}: {params: Promise<{id: string}>}) => {
     const id = (await params).id;
 
     const [response, resp] = await Promise.all([
-        fetch(`https://launchpad-be-z59x.onrender.com/api/startup-details/${id}`, {
+        fetch(`https://launchpadbe.vercel.app/api/startup-details/${id}`, {
             next: { revalidate: 60 },
         }),
-        axios.get("https://launchpad-be-z59x.onrender.com/api/startups-by-slug/editor-picks")
+        axios.get("https://launchpadbe.vercel.app/api/startups-by-slug/editor-picks")
     ])
 
-    // const response = await fetch(`https://launchpad-be-z59x.onrender.com/api/startup-details/${id}`, {
+    // const response = await fetch(`https://launchpadbe.vercel.app/api/startup-details/${id}`, {
     //     next: { revalidate: 60 },
     // });
     // console.log(response);
     const posts = await response.json();
     const post = posts.startups;
     // console.log(post);
-    // const resp = await axios.get("https://launchpad-be-z59x.onrender.com/api/startups-by-slug/editor-picks");
+    // const resp = await axios.get("https://launchpadbe.vercel.app/api/startups-by-slug/editor-picks");
     // console.log(resp);
     const editorPicks = resp.data.select;
     // console.log("Editor Picks: ", editorPicks);

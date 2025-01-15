@@ -6,13 +6,13 @@ import { after } from 'next/server'
 
 const View = async ({id}: {id: string}) => {
 
-  const response = await axios.get(`https://launchpad-be-z59x.onrender.com/api/get-views/${id}`);
+  const response = await axios.get(`https://launchpadbe.vercel.app/api/get-views/${id}`);
   const viewCount = response.data.views;
   // console.log(viewCount);
 
   after(async () => {
     // console.log('View component has been rendered');
-    await axios.post(`https://launchpad-be-z59x.onrender.com/api/increment-views/${id}`);
+    await axios.post(`https://launchpadbe.vercel.app/api/increment-views/${id}`);
   })
 
   return <div className='view-container'>

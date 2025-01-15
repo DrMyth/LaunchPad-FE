@@ -5,7 +5,7 @@ import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 
 async function getStartups(query: string) {
-  const response = await axios.post("https://launchpad-be-z59x.onrender.com/api/startups", {
+  const response = await axios.post("https://launchpadbe.vercel.app/api/startups", {
       query
   });
   return response.data.startups;
