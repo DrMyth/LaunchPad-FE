@@ -3,6 +3,7 @@ import SearchForm from "../../components/SearchForm";
 import axios from "axios";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
+import StartupListClient from "./StartupCards";
 
 async function getStartups(query: string) {
   const response = await axios.post("https://launchpadbe.vercel.app/api/startups", {
@@ -45,15 +46,7 @@ export default async function Home({
           {query ? `Search results for "${query}"` : `All Startups`}
         </p>
 
-        <ul className="mt-7 card_grid">
-        {posts?.length > 0 ? (
-          posts.map((post: StartupTypeCard, index: number) => (
-            <StartupCard key={post?._id} post={post} />
-          ))
-        ) : (
-          <p>No startups found.</p>
-        )}
-      </ul>
+        <StartupListClient initialPosts={posts} query={query || ""} />
       </section>
     </>
   );
