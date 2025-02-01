@@ -9,9 +9,7 @@ const StartupListClient = ({ initialPosts, query}: {initialPosts: any, query: an
 
   const fetchStartups = async () => {
     try {
-      const response = await axios.post("https://launchpadbe.vercel.app/api/startups", {
-        query,
-      });
+      const response = await axios.post("https://launchpadbe.vercel.app/api/startups");
       setPosts(response.data.startups);
     } catch (error) {
       console.error("Error fetching startups:", error);
