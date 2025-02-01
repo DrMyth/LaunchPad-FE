@@ -46,7 +46,7 @@ export default async function Home({
           {query ? `Search results for "${query}"` : `All Startups`}
         </p>
 
-        <StartupListClient initialPosts={posts} query={query || ""} />
+        <StartupListClient initialPosts={posts} />
       </section>
     </>
   );

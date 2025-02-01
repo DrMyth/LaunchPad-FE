@@ -3,18 +3,28 @@
 import { useEffect, useState } from "react";
 import StartupCard, { StartupTypeCard } from "../../components/StartupCard";
 import axios from "axios";
+import { useSearchParams } from "next/navigation";
 
-const StartupListClient = ({ initialPosts, query}: {initialPosts: any, query: any}) => {
+const StartupListClient = ({ initialPosts}: {initialPosts: any}) => {
   const [posts, setPosts] = useState(initialPosts);
+  const searchParams = useSearchParams();
+  const query = searchParams.get("query");  
 
-  const fetchStartups = async () => {
+  const fetchStartups = async (query: string) => {
     try {
-      const response = await axios.post("https://launchpadbe.vercel.app/api/startups");
+      const response = await axios.post("https://launchpadbe.vercel.app/api/startups", {
+        query
+      });
+      // console.log(query);
       setPosts(response.data.startups);
     } catch (error) {
       console.error("Error fetching startups:", error);
     }
   };
+
+  useEffect(() => {
+      fetchStartups(query as string);
+  }, [query]);
 
   useEffect(() => {
     const ws = new WebSocket("wss://launchpad-ws-production.up.railway.app");
@@ -28,7 +38,7 @@ const StartupListClient = ({ initialPosts, query}: {initialPosts: any, query: an
       console.log("WebSocket message received:", message);
 
       if (message.operationType === "insert" || message.operationType === "delete") {
-        fetchStartups();
+        fetchStartups(query || "");
       }
     };
 
@@ -39,7 +49,7 @@ const StartupListClient = ({ initialPosts, query}: {initialPosts: any, query: an
     return () => {
       ws.close();
     };
-  }, [query]);
+  }, []);
 
   return (
     <ul className="mt-7 card_grid">
