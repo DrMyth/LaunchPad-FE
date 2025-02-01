@@ -19,7 +19,7 @@ const StartupListClient = ({ initialPosts, query}: {initialPosts: any, query: an
   };
 
   useEffect(() => {
-    const ws = new WebSocket("ws://localhost:5000");
+    const ws = new WebSocket("wss://launchpad-ws-production.up.railway.app");
 
     ws.onopen = () => {
         console.log("WebSocket connection established");
